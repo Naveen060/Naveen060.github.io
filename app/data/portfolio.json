@@ -8,51 +8,90 @@
   "stats": [
     { "value": "04", "label": "featured builds" },
     { "value": "03", "label": "cloud credentials" },
-    { "value": "12+", "label": "core technologies" }
+    { "value": "40+", "label": "resume-backed skills" }
   ],
   "skillGroups": [
     {
-      "id": "core",
-      "label": "Core engineering",
-      "summary": "The languages and foundations I use to turn product ideas into reliable software.",
+      "id": "programming",
+      "label": "Programming & frameworks",
+      "summary": "Production languages and frameworks used across AI workflows, financial services, APIs, and product interfaces.",
       "items": [
-        { "name": "Python", "level": 92 },
-        { "name": "SQL", "level": 82 },
-        { "name": "JavaScript", "level": 78 },
-        { "name": "TypeScript", "level": 74 }
+        { "name": "Python", "type": "Language", "proof": "Used for AI workflow automation processing 5M+ transactions daily, financial backend services, and both computer-vision projects.", "usedIn": ["Goldman Sachs", "J.P. Morgan", "AI projects"] },
+        { "name": "Java", "type": "Language", "proof": "Built financial backend services and enterprise APIs across J.P. Morgan and Tata Consultancy Services.", "usedIn": ["J.P. Morgan", "TCS"] },
+        { "name": "Spring Boot", "type": "Framework", "proof": "Powered backend services processing 3M+ financial transactions daily with 99.7% accuracy.", "usedIn": ["J.P. Morgan", "Backend services"] },
+        { "name": "React.js", "type": "Framework", "proof": "Part of the full-stack toolkit used to build responsive, component-driven product surfaces.", "usedIn": ["Full-stack development", "Product UI"] },
+        { "name": "GraphQL", "type": "API", "proof": "Used within the API toolkit for flexible, client-driven data access and modern product integration.", "usedIn": ["API design", "Full-stack development"] },
+        { "name": "TypeScript", "type": "Language", "proof": "Used to create safer, typed frontend and service integrations for maintainable applications.", "usedIn": ["Product UI", "Service integration"] }
       ]
     },
     {
-      "id": "backend",
-      "label": "Backend & data",
-      "summary": "API-first services, persistence, and data workflows designed around clear product behavior.",
+      "id": "ai",
+      "label": "AI & machine learning",
+      "summary": "Foundation-model integration, agentic orchestration, retrieval, evaluation, and applied computer vision.",
       "items": [
-        { "name": "FastAPI", "level": 88 },
-        { "name": "Flask", "level": 87 },
-        { "name": "SQLite", "level": 80 },
-        { "name": "REST APIs", "level": 90 }
+        { "name": "Foundation Models", "type": "AI systems", "proof": "Integrated into fraud-detection pipelines that reduced false positives by 28% and detection latency by 40%.", "usedIn": ["J.P. Morgan", "Fraud detection"] },
+        { "name": "LLM Integration", "type": "AI engineering", "proof": "Designed model evaluation suites that improved LLM accuracy by 15% through rubric-based and model-graded assessments.", "usedIn": ["LLM evaluation", "Data science collaboration"] },
+        { "name": "Agentic Systems", "type": "AI architecture", "proof": "Applied intelligent process orchestration to automate complex workflows and reduce operational costs by $1.2M annually.", "usedIn": ["Goldman Sachs", "Workflow automation"] },
+        { "name": "Hugging Face", "type": "AI platform", "proof": "Part of the model integration toolkit for working with pretrained models and production AI workflows.", "usedIn": ["Model integration", "Applied AI"] },
+        { "name": "LangChain", "type": "AI framework", "proof": "Used in the orchestration toolkit for composing model, retrieval, and tool-driven application flows.", "usedIn": ["LLM applications", "Orchestration"] },
+        { "name": "LangGraph", "type": "AI framework", "proof": "Supports stateful, multi-step agent workflows with explicit control over execution and recovery.", "usedIn": ["Agentic workflows", "Orchestration"] },
+        { "name": "Prompt Engineering", "type": "AI practice", "proof": "Used to shape dependable model behavior and build clearer evaluation criteria for AI-powered products.", "usedIn": ["LLM evaluation", "AI products"] },
+        { "name": "RAG", "type": "AI architecture", "proof": "Part of the AI stack for grounding model responses in relevant, retrieved business context.", "usedIn": ["Knowledge systems", "LLM applications"] }
       ]
     },
     {
-      "id": "intelligence",
-      "label": "AI & vision",
-      "summary": "Practical machine-learning and computer-vision systems with usable interfaces around them.",
+      "id": "data",
+      "label": "Data & messaging",
+      "summary": "Datastores, caching, and event infrastructure for high-volume, low-latency production systems.",
       "items": [
-        { "name": "OpenCV", "level": 90 },
-        { "name": "TensorFlow", "level": 79 },
-        { "name": "scikit-learn", "level": 84 },
-        { "name": "pandas / NumPy", "level": 88 }
+        { "name": "PostgreSQL", "type": "Database", "proof": "Supported enterprise APIs handling more than 2M records daily at Tata Consultancy Services.", "usedIn": ["TCS", "Enterprise APIs"] },
+        { "name": "MongoDB", "type": "Database", "proof": "Part of the data toolkit for flexible document storage and scalable application data models.", "usedIn": ["Application data", "Backend systems"] },
+        { "name": "Redis", "type": "Cache", "proof": "Supported 150K+ concurrent users while reducing database load by 30% through distributed caching.", "usedIn": ["J.P. Morgan", "High-concurrency systems"] },
+        { "name": "Apache Kafka", "type": "Event streaming", "proof": "Enabled reliable processing of 1M+ events per hour and improved resilience in event-driven workflows.", "usedIn": ["Goldman Sachs", "TCS"] },
+        { "name": "RabbitMQ", "type": "Messaging", "proof": "Helped improve message throughput by 35% and reduce latency by 20% in workflow automation.", "usedIn": ["TCS", "Workflow automation"] }
       ]
     },
     {
-      "id": "product",
-      "label": "Product surfaces",
-      "summary": "Interfaces and desktop experiences that make technical systems understandable and useful.",
+      "id": "cloud",
+      "label": "Cloud & DevOps",
+      "summary": "Cloud-native delivery, containers, orchestration, and automated release pipelines built for reliability.",
       "items": [
-        { "name": "React", "level": 78 },
-        { "name": "Streamlit", "level": 90 },
-        { "name": "Electron", "level": 70 },
-        { "name": "Git / Vite", "level": 82 }
+        { "name": "AWS EC2", "type": "Cloud", "proof": "Part of the AWS infrastructure toolkit for hosting scalable compute workloads.", "usedIn": ["AWS", "Cloud infrastructure"] },
+        { "name": "AWS S3", "type": "Cloud", "proof": "Used within AWS architectures for durable object storage and application data workflows.", "usedIn": ["AWS", "Cloud storage"] },
+        { "name": "AWS Lambda", "type": "Serverless", "proof": "Integrated into real-time decision APIs delivering sub-100ms latency under peak loads.", "usedIn": ["Goldman Sachs", "Decision workflows"] },
+        { "name": "AWS RDS", "type": "Cloud database", "proof": "Supported cloud-backed decision workflows requiring scalable, managed relational data.", "usedIn": ["Goldman Sachs", "Cloud APIs"] },
+        { "name": "Docker", "type": "Containers", "proof": "Helped accelerate release cycles by 35% and improve deployment reliability through consistent packaging.", "usedIn": ["Goldman Sachs", "J.P. Morgan"] },
+        { "name": "Kubernetes", "type": "Orchestration", "proof": "Improved scalability and reduced downtime by 25% through automated container orchestration.", "usedIn": ["J.P. Morgan", "Platform delivery"] },
+        { "name": "CI/CD", "type": "Delivery", "proof": "Automated build, test, and deployment workflows to make releases faster and more dependable.", "usedIn": ["Production delivery", "Release engineering"] },
+        { "name": "Jenkins", "type": "Automation", "proof": "Powered continuous delivery pipelines that accelerated release cycles by 35%.", "usedIn": ["Goldman Sachs", "CI/CD"] }
+      ]
+    },
+    {
+      "id": "architecture",
+      "label": "Architecture & delivery",
+      "summary": "System design practices for dependable distributed services, measurable performance, and complete SDLC ownership.",
+      "items": [
+        { "name": "Microservices", "type": "Architecture", "proof": "Used in AI-enabled workflow automation processing more than 5M transactions every day.", "usedIn": ["Goldman Sachs", "Workflow platform"] },
+        { "name": "RESTful APIs", "type": "API", "proof": "Designed scalable services for real-time decisions with sub-100ms latency under peak load.", "usedIn": ["Goldman Sachs", "TCS"] },
+        { "name": "Event-driven Architecture", "type": "Architecture", "proof": "Orchestrated high-volume processing of 1M+ events per hour with improved resilience.", "usedIn": ["Goldman Sachs", "Kafka workflows"] },
+        { "name": "Distributed Systems", "type": "Architecture", "proof": "Built around caching, messaging, and resilient services supporting high-volume financial workloads.", "usedIn": ["Financial platforms", "High-scale services"] },
+        { "name": "System Design", "type": "Engineering", "proof": "Applied end-to-end design thinking from ambiguous requirements through deployment and monitoring.", "usedIn": ["Product delivery", "Complete SDLC"] },
+        { "name": "Performance Tuning", "type": "Engineering", "proof": "Delivered measurable gains in API latency, message throughput, model inference, and database load.", "usedIn": ["Production optimization", "Reliability"] },
+        { "name": "Agile", "type": "Delivery", "proof": "Worked cross-functionally to translate requirements into incrementally delivered production systems.", "usedIn": ["Team delivery", "Stakeholder collaboration"] },
+        { "name": "Scrum", "type": "Delivery", "proof": "Applied iterative planning and team coordination across the software development lifecycle.", "usedIn": ["Team delivery", "SDLC"] }
+      ]
+    },
+    {
+      "id": "quality",
+      "label": "Testing & monitoring",
+      "summary": "Automated testing, API documentation, code quality, and production observability for reliable releases.",
+      "items": [
+        { "name": "JUnit", "type": "Testing", "proof": "Part of the Java testing stack for repeatable unit-level verification of backend behavior.", "usedIn": ["Java services", "Automated testing"] },
+        { "name": "Mockito", "type": "Testing", "proof": "Used to isolate Java service dependencies and verify backend logic with focused tests.", "usedIn": ["Java services", "Unit testing"] },
+        { "name": "TestNG", "type": "Testing", "proof": "Supports structured automated test suites across service and integration workflows.", "usedIn": ["Test automation", "Quality engineering"] },
+        { "name": "Swagger / OpenAPI", "type": "API quality", "proof": "Used to document, validate, and communicate REST API contracts across teams.", "usedIn": ["API design", "Team integration"] },
+        { "name": "SonarQube", "type": "Code quality", "proof": "Supported production monitoring and quality workflows that maintained 99.9% uptime.", "usedIn": ["Goldman Sachs", "Quality gates"] },
+        { "name": "Production Monitoring", "type": "Observability", "proof": "Maintained 99.9% uptime with custom dashboards and rapid incident response.", "usedIn": ["Goldman Sachs", "Production reliability"] }
       ]
     }
   ],

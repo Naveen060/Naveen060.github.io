@@ -10,6 +10,9 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [roleIndex, setRoleIndex] = useState(0);
   const [activeSkill, setActiveSkill] = useState(portfolio.skillGroups[0].id);
+  const [activeTechnology, setActiveTechnology] = useState(portfolio.skillGroups[0].items[0].name);
+  const [skillQuery, setSkillQuery] = useState("");
+  const [skillAutoPlay, setSkillAutoPlay] = useState(true);
   const [filter, setFilter] = useState<(typeof filters)[number]>("All");
   const [openProject, setOpenProject] = useState<string | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -50,6 +53,37 @@ export default function Home() {
     () => portfolio.skillGroups.find((group) => group.id === activeSkill) ?? portfolio.skillGroups[0],
     [activeSkill]
   );
+
+  const selectedTechnology = useMemo(
+    () => selectedSkill.items.find((item) => item.name === activeTechnology) ?? selectedSkill.items[0],
+    [activeTechnology, selectedSkill]
+  );
+
+  const skillDirectory = useMemo(
+    () => portfolio.skillGroups.flatMap((group) =>
+      group.items.map((item) => ({ ...item, groupId: group.id, groupLabel: group.label }))
+    ),
+    []
+  );
+
+  const skillMatches = useMemo(() => {
+    const query = skillQuery.trim().toLowerCase();
+    if (!query) return [];
+    return skillDirectory.filter((item) =>
+      `${item.name} ${item.type} ${item.groupLabel} ${item.proof}`.toLowerCase().includes(query)
+    ).slice(0, 8);
+  }, [skillDirectory, skillQuery]);
+
+  useEffect(() => {
+    if (!skillAutoPlay || skillQuery) return;
+    const timer = window.setInterval(() => {
+      setActiveTechnology((current) => {
+        const currentIndex = selectedSkill.items.findIndex((item) => item.name === current);
+        return selectedSkill.items[(currentIndex + 1) % selectedSkill.items.length].name;
+      });
+    }, 3600);
+    return () => window.clearInterval(timer);
+  }, [selectedSkill, skillAutoPlay, skillQuery]);
 
   const visibleProjects = useMemo(
     () => portfolio.projects.filter((project) => filter === "All" || project.category === filter),
@@ -176,9 +210,9 @@ export default function Home() {
 
       <section className="section skills-section" id="skills">
         <div className="section-intro" data-reveal>
-          <p className="section-label">01 · Interactive stack</p>
-          <h2>Choose a layer.<br />See how I build.</h2>
-          <p>Select a category to explore the tools behind my projects and the kind of problems I use them to solve.</p>
+          <p className="section-label">01 · Live skills explorer</p>
+          <h2>Explore the stack.<br />See the evidence.</h2>
+          <p>Search or select a resume-backed skill to see where it was applied and the production outcome behind it.</p>
         </div>
 
         <div className="skill-explorer" data-reveal>
@@ -189,27 +223,98 @@ export default function Home() {
                 role="tab"
                 aria-selected={activeSkill === group.id}
                 className={activeSkill === group.id ? "is-active" : ""}
-                onClick={() => setActiveSkill(group.id)}
+                onClick={() => {
+                  setActiveSkill(group.id);
+                  setActiveTechnology(group.items[0].name);
+                  setSkillQuery("");
+                }}
                 key={group.id}
               >
                 <span>{String(portfolio.skillGroups.indexOf(group) + 1).padStart(2, "0")}</span>
-                {group.label}
+                <span className="skill-tab-copy"><strong>{group.label}</strong><small>{group.items.length} skills</small></span>
               </button>
             ))}
           </div>
           <div className="skill-output" role="tabpanel" key={selectedSkill.id}>
             <div className="output-head">
               <div><i /><i /><i /></div>
-              <span>stack/{selectedSkill.id}.json</span>
+              <span>resume/skills/{selectedSkill.id}.json</span>
             </div>
-            <p>{selectedSkill.summary}</p>
-            <div className="skill-meters">
-              {selectedSkill.items.map((item) => (
-                <div className="skill-meter" key={item.name}>
-                  <div><strong>{item.name}</strong><span>{item.level}%</span></div>
-                  <i><b style={{ width: `${item.level}%` }} /></i>
+
+            <div className="skill-console-tools">
+              <label className="skill-search" htmlFor="skill-search-input">
+                <span aria-hidden="true">⌕</span>
+                <input
+                  id="skill-search-input"
+                  type="search"
+                  value={skillQuery}
+                  onChange={(event) => setSkillQuery(event.target.value)}
+                  placeholder="Search 40+ skills"
+                  autoComplete="off"
+                />
+                <small>{skillQuery ? `${skillMatches.length} found` : `${skillDirectory.length} total`}</small>
+              </label>
+              <button
+                className={skillAutoPlay ? "skill-autoplay is-running" : "skill-autoplay"}
+                type="button"
+                aria-pressed={skillAutoPlay}
+                onClick={() => setSkillAutoPlay((value) => !value)}
+              >
+                <i aria-hidden="true" /> {skillAutoPlay ? "Auto spotlight" : "Resume spotlight"}
+              </button>
+            </div>
+
+            {skillQuery && (
+              <div className="skill-search-results" aria-live="polite">
+                {skillMatches.length > 0 ? skillMatches.map((match) => (
+                  <button
+                    type="button"
+                    key={`${match.groupId}-${match.name}`}
+                    onClick={() => {
+                      setActiveSkill(match.groupId);
+                      setActiveTechnology(match.name);
+                      setSkillQuery("");
+                      setSkillAutoPlay(false);
+                    }}
+                  >
+                    <strong>{match.name}</strong>
+                    <span>{match.groupLabel}</span>
+                  </button>
+                )) : <p>No matching skill yet. Try “Kafka”, “AWS”, or “LLM”.</p>}
+              </div>
+            )}
+
+            <p className="skill-summary">{selectedSkill.summary}</p>
+            <div className="skill-browser">
+              <div className="skill-cloud" role="listbox" aria-label={`${selectedSkill.label} skills`}>
+                {selectedSkill.items.map((item, index) => (
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={selectedTechnology.name === item.name}
+                    className={selectedTechnology.name === item.name ? "is-active" : ""}
+                    onClick={() => {
+                      setActiveTechnology(item.name);
+                      setSkillAutoPlay(false);
+                    }}
+                    key={item.name}
+                  >
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    {item.name}
+                  </button>
+                ))}
+              </div>
+
+              <article className="skill-proof" key={selectedTechnology.name}>
+                <div className="proof-kicker"><i aria-hidden="true" /> Resume evidence</div>
+                <p>{selectedTechnology.type}</p>
+                <h3>{selectedTechnology.name}</h3>
+                <blockquote>{selectedTechnology.proof}</blockquote>
+                <div className="proof-tags">
+                  <span>Applied in</span>
+                  {selectedTechnology.usedIn.map((context) => <small key={context}>{context}</small>)}
                 </div>
-              ))}
+              </article>
             </div>
           </div>
         </div>
