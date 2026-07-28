@@ -177,11 +177,21 @@ export default function Home() {
           }}
           onPointerLeave={() => setTilt({ x: 0, y: 0 })}
         >
-          <div
-            className="photo-card"
-            style={{ transform: `perspective(900px) rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)` }}
-          >
-            <img src="/naveen-profile-blurred.png" alt="Venkata Naveen by the Chicago River" />
+          <div className="portrait-stage">
+            <span className="portrait-ring ring-one" aria-hidden="true" />
+            <span className="portrait-ring ring-two" aria-hidden="true" />
+            <span className="portrait-signal signal-one" aria-hidden="true" />
+            <span className="portrait-signal signal-two" aria-hidden="true" />
+            <div
+              className="photo-card"
+              style={{ transform: `perspective(900px) rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)` }}
+            >
+              <img src="/naveen-profile-blurred.png" alt="Venkata Naveen by the Chicago River" />
+              <div className="photo-identity">
+                <strong>Venkata Naveen Chava</strong>
+                <span>Software Engineer <i aria-hidden="true" /> AI &amp; ML</span>
+              </div>
+            </div>
           </div>
           <div className="hero-media-meta">
             <div className="live-card">
