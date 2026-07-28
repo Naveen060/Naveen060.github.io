@@ -182,21 +182,22 @@ export default function Home() {
             style={{ transform: `perspective(900px) rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)` }}
           >
             <img src="/naveen-profile-blurred.png" alt="Venkata Naveen by the Chicago River" />
-            <div className="photo-shade" />
-            <div className="photo-label">
-              <span>Venkata Naveen</span>
-              <small>Software Engineer</small>
+          </div>
+          <div className="photo-caption">
+            <strong>Venkata Naveen</strong>
+            <span>Software Engineer</span>
+          </div>
+          <div className="hero-media-meta">
+            <div className="live-card">
+              <span><i /> live profile</span>
+              <strong>Building useful systems</strong>
             </div>
-          </div>
-          <div className="live-card">
-            <span><i /> live profile</span>
-            <strong>Building useful systems</strong>
-          </div>
-          <div className="json-card">
-            <div><span /> <span /> <span /></div>
-            <code>
-              {`{\n  "focus": "${portfolio.roles[roleIndex]}",\n  "mode": "shipping"\n}`}
-            </code>
+            <div className="json-card">
+              <div><span /> <span /> <span /></div>
+              <code>
+                {`{\n  "focus": "${portfolio.roles[roleIndex]}",\n  "mode": "shipping"\n}`}
+              </code>
+            </div>
           </div>
         </div>
 
