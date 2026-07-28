@@ -13,9 +13,24 @@ const body = DM_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://venkata-naveen-portfolio.venkatanaveench519.chatgpt.site"),
   title: "Venkata Naveen Chava | Software Engineer",
   description:
     "Portfolio of Venkata Naveen Chava — software engineer building AI-enabled products, backend platforms, and computer-vision systems.",
+  openGraph: {
+    title: "Venkata Naveen Chava | Software Engineer",
+    description: "Building intelligent software beyond the demo.",
+    url: "/",
+    siteName: "Venkata Naveen Chava",
+    images: [{ url: "/og.png", alt: "Venkata Naveen Chava — Software Engineer, AI & Backend" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Venkata Naveen Chava | Software Engineer",
+    description: "Building intelligent software beyond the demo.",
+    images: ["/og.png"],
+  },
 };
 
 export default function RootLayout({
