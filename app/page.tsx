@@ -186,7 +186,7 @@ export default function Home() {
               className="photo-card"
               style={{ transform: `perspective(900px) rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)` }}
             >
-              <img src="/naveen-profile-blurred.png" alt="Venkata Naveen by the Chicago River" />
+              <img src="naveen-profile-blurred.png" alt="Venkata Naveen by the Chicago River" />
               <div className="photo-identity">
                 <strong>Venkata Naveen Chava</strong>
                 <span>Software Engineer <i aria-hidden="true" /> AI &amp; ML</span>

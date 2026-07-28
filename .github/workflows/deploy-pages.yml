@@ -17,6 +17,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_BASE_PATH: /venkata-naveen-portfolio
     steps:
       - name: Check out repository
         uses: actions/checkout@v4

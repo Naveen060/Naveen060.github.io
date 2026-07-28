@@ -13,23 +13,23 @@ const body = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://naveen060.github.io"),
+  metadataBase: new URL("https://naveen060.github.io/venkata-naveen-portfolio/"),
   title: "Venkata Naveen Chava | Software Engineer",
   description:
     "Interactive portfolio of Venkata Naveen Chava - software engineer building AI-enabled products, backend platforms, and computer-vision systems.",
   openGraph: {
     title: "Venkata Naveen Chava | Software Engineer",
     description: "Building useful systems beyond the demo.",
-    url: "/",
+    url: "https://naveen060.github.io/venkata-naveen-portfolio/",
     siteName: "Venkata Naveen Chava",
-    images: [{ url: "/og.png", alt: "Venkata Naveen Chava - Software Engineer, AI & Backend" }],
+    images: [{ url: "/venkata-naveen-portfolio/og.png", alt: "Venkata Naveen Chava - Software Engineer, AI & Backend" }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Venkata Naveen Chava | Software Engineer",
     description: "Building useful systems beyond the demo.",
-    images: ["/og.png"],
+    images: ["/venkata-naveen-portfolio/og.png"],
   },
 };
 
