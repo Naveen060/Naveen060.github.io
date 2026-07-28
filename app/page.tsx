@@ -88,20 +88,25 @@ export default function Home() {
         </a>
       </header>
 
-      <section className="hero" id="top">
+      <section className="hero poster-hero" id="top">
         <div className="hero-grid" aria-hidden="true" />
-        <div className="hero-copy">
-          <div className="eyebrow">
-            <span className="status-dot" /> Software Engineer · AI & Backend
+        <h1 className="sr-only">
+          Venkata Naveen Chava — Software Engineer, AI and Backend
+        </h1>
+        <div className="poster-shell">
+          <img
+            className="poster-image"
+            src="/og.png"
+            alt="Venkata Naveen Chava — Software Engineer, AI and Backend. Building intelligent software beyond the demo."
+          />
+        </div>
+        <div className="poster-footer">
+          <div className="poster-proof" aria-label="Portfolio focus">
+            <span><i className="status-dot" /> Applied AI</span>
+            <span>Backend systems</span>
+            <span>Computer vision</span>
+            <span>4 selected builds</span>
           </div>
-          <p className="hero-intro">Hello, I&apos;m Venkata Naveen.</p>
-          <h1>
-            I build intelligent software that works <em>beyond the demo.</em>
-          </h1>
-          <p className="hero-summary">
-            From computer vision to backend platforms, I turn ambitious ideas into practical,
-            structured products people can actually use.
-          </p>
           <div className="hero-actions">
             <a className="button button-primary" href="#work">
               Explore my work <span aria-hidden="true">↓</span>
@@ -114,46 +119,6 @@ export default function Home() {
             >
               LinkedIn <span aria-hidden="true">↗</span>
             </a>
-          </div>
-          <div className="hero-stats" aria-label="Portfolio summary">
-            <div>
-              <strong>04</strong>
-              <span>Selected builds</span>
-            </div>
-            <div>
-              <strong>03</strong>
-              <span>Cloud credentials</span>
-            </div>
-            <div>
-              <strong>01</strong>
-              <span>Product mindset</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="hero-visual">
-          <div className="visual-orbit orbit-one" aria-hidden="true" />
-          <div className="visual-orbit orbit-two" aria-hidden="true" />
-          <div className="portrait-card">
-            <div className="portrait-frame">
-              <img src="/naveen-profile.jpg" alt="Venkata Naveen" />
-            </div>
-            <div className="portrait-caption">
-              <div>
-                <span>Currently</span>
-                <strong>Goldman Sachs</strong>
-              </div>
-              <span className="caption-arrow" aria-hidden="true">↗</span>
-            </div>
-          </div>
-          <div className="floating-tag tag-ai">Applied AI</div>
-          <div className="floating-tag tag-python">Python-first</div>
-          <div className="availability-card">
-            <span className="mini-dot" />
-            <div>
-              <strong>Building useful systems</strong>
-              <span>United States</span>
-            </div>
           </div>
         </div>
       </section>
