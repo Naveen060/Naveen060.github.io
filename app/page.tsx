@@ -183,10 +183,6 @@ export default function Home() {
           >
             <img src="/naveen-profile-blurred.png" alt="Venkata Naveen by the Chicago River" />
           </div>
-          <div className="photo-caption">
-            <strong>Venkata Naveen</strong>
-            <span>Software Engineer</span>
-          </div>
           <div className="hero-media-meta">
             <div className="live-card">
               <span><i /> live profile</span>
