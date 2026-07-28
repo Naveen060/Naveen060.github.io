@@ -357,6 +357,11 @@ footer p:last-child { justify-self: end; }
 [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity 650ms ease, transform 650ms ease; }
 [data-reveal].is-visible { opacity: 1; transform: none; }
 
+/* Project accordions manage their own state. Keep them visible even if an older
+   cached page still carries the legacy scroll-reveal attribute. */
+.project-row[data-reveal],
+.project-row[data-reveal].is-visible { opacity: 1; transform: none; }
+
 @media (max-width: 980px) {
   .hero { grid-template-columns: 1fr; padding-top: 140px; padding-bottom: 150px; }
   .hero-content { max-width: 800px; }
