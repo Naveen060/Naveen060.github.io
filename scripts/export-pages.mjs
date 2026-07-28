@@ -47,6 +47,11 @@ if (!html.includes("Venkata Naveen") || !html.includes("/assets/")) {
 
 await writeFile(path.join(deploymentDirectory, "index.html"), html, "utf8");
 await writeFile(path.join(outputDirectory, ".nojekyll"), "", "utf8");
+await writeFile(
+  path.join(outputDirectory, "robots.txt"),
+  `User-agent: *\nDisallow: /${basePath ? `${basePath}/` : ""}\n`,
+  "utf8",
+);
 
 if (basePath) {
   const escapedUrl = publicUrl.replaceAll("&", "&amp;").replaceAll('"', "&quot;");
@@ -55,6 +60,7 @@ if (basePath) {
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="robots" content="noindex,nofollow,noarchive">
     <meta http-equiv="refresh" content="0;url=${escapedUrl}">
     <link rel="canonical" href="${escapedUrl}">
     <title>Venkata Naveen Chava - Portfolio</title>

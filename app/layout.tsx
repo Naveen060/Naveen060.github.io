@@ -17,6 +17,16 @@ export const metadata: Metadata = {
   title: "Venkata Naveen Chava | Software Engineer",
   description:
     "Interactive portfolio of Venkata Naveen Chava - software engineer building AI-enabled products, backend platforms, and computer-vision systems.",
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+    },
+  },
   openGraph: {
     title: "Venkata Naveen Chava | Software Engineer",
     description: "Building useful systems beyond the demo.",
