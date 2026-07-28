@@ -13,7 +13,7 @@ const body = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://venkata-naveen-portfolio.venkatanaveench519.chatgpt.site"),
+  metadataBase: new URL("https://naveen060.github.io"),
   title: "Venkata Naveen Chava | Software Engineer",
   description:
     "Interactive portfolio of Venkata Naveen Chava - software engineer building AI-enabled products, backend platforms, and computer-vision systems.",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     description: "Building useful systems beyond the demo.",
     url: "/",
     siteName: "Venkata Naveen Chava",
-    images: [{ url: "/og.png", alt: "Venkata Naveen Chava — Software Engineer, AI & Backend" }],
+    images: [{ url: "/og.png", alt: "Venkata Naveen Chava - Software Engineer, AI & Backend" }],
     type: "website",
   },
   twitter: {
