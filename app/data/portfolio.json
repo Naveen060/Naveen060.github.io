@@ -1,0 +1,134 @@
+{
+  "roles": [
+    "applied AI",
+    "backend systems",
+    "computer vision",
+    "developer tools"
+  ],
+  "stats": [
+    { "value": "04", "label": "featured builds" },
+    { "value": "03", "label": "cloud credentials" },
+    { "value": "12+", "label": "core technologies" }
+  ],
+  "skillGroups": [
+    {
+      "id": "core",
+      "label": "Core engineering",
+      "summary": "The languages and foundations I use to turn product ideas into reliable software.",
+      "items": [
+        { "name": "Python", "level": 92 },
+        { "name": "SQL", "level": 82 },
+        { "name": "JavaScript", "level": 78 },
+        { "name": "TypeScript", "level": 74 }
+      ]
+    },
+    {
+      "id": "backend",
+      "label": "Backend & data",
+      "summary": "API-first services, persistence, and data workflows designed around clear product behavior.",
+      "items": [
+        { "name": "FastAPI", "level": 88 },
+        { "name": "Flask", "level": 87 },
+        { "name": "SQLite", "level": 80 },
+        { "name": "REST APIs", "level": 90 }
+      ]
+    },
+    {
+      "id": "intelligence",
+      "label": "AI & vision",
+      "summary": "Practical machine-learning and computer-vision systems with usable interfaces around them.",
+      "items": [
+        { "name": "OpenCV", "level": 90 },
+        { "name": "TensorFlow", "level": 79 },
+        { "name": "scikit-learn", "level": 84 },
+        { "name": "pandas / NumPy", "level": 88 }
+      ]
+    },
+    {
+      "id": "product",
+      "label": "Product surfaces",
+      "summary": "Interfaces and desktop experiences that make technical systems understandable and useful.",
+      "items": [
+        { "name": "React", "level": 78 },
+        { "name": "Streamlit", "level": 90 },
+        { "name": "Electron", "level": 70 },
+        { "name": "Git / Vite", "level": 82 }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "attendance",
+      "index": "01",
+      "title": "Attendance Intelligence Platform",
+      "category": "AI / CV",
+      "summary": "A complete face-recognition attendance workflow with admin controls, reporting, and configurable recognition behavior.",
+      "challenge": "Move beyond a single-camera demo and create a usable attendance workflow with safer recognition decisions.",
+      "solution": "Combined vector descriptors, unknown-person rejection, liveness checks, multi-face scanning, admin management, and SQLite history.",
+      "outcome": "A portfolio-grade local platform with analytics, corrections, exports, user-photo management, and automatic retraining.",
+      "tags": ["Flask", "OpenCV", "SQLite", "Computer Vision"],
+      "href": "https://github.com/Naveen060/face-recognition-based-attendance-system",
+      "accent": "cyan"
+    },
+    {
+      "id": "emotion-music",
+      "index": "02",
+      "title": "Emotion-Aware Music Recommender",
+      "category": "AI / CV",
+      "summary": "A webcam-powered experience that reads emotion signals and turns them into an explorable playlist.",
+      "challenge": "Make a facial-emotion prototype useful even when a heavy local ML stack or webcam is unavailable.",
+      "solution": "Added ranked emotion capture, mood normalization, scored recommendations, demo presets, insights, and CSV export.",
+      "outcome": "A polished Streamlit flow that supports both live inference and a dependable demonstration mode.",
+      "tags": ["Streamlit", "TensorFlow", "OpenCV", "pandas"],
+      "href": "https://github.com/Naveen060/Emotion-based-music-recommendation-system",
+      "accent": "violet"
+    },
+    {
+      "id": "team10",
+      "index": "03",
+      "title": "Team10 Sprint Board",
+      "category": "Tools",
+      "summary": "A lightweight sprint workspace for planning, ownership, status tracking, and backlog visibility.",
+      "challenge": "Give a small team a useful project command center without introducing a complex hosted stack.",
+      "solution": "Built task creation, ownership, sprint labels, filters, status changes, metrics, local JSON persistence, and CSV export.",
+      "outcome": "A simple but real team workflow with modular services and a verification path for sprint analytics.",
+      "tags": ["Python", "Streamlit", "JSON", "Testing"],
+      "href": "https://github.com/Naveen060/team10",
+      "accent": "green"
+    },
+    {
+      "id": "python-toolkit",
+      "index": "04",
+      "title": "Python Utility Toolkit",
+      "category": "Tools",
+      "summary": "A dependency-light command-line toolkit for everyday text, JSON, file, and checksum workflows.",
+      "challenge": "Turn a placeholder repository into a small tool that demonstrates useful, reusable Python structure.",
+      "solution": "Created modular text, JSON, file-stat, slug, formatting, and SHA-256 commands with tests and clear usage examples.",
+      "outcome": "A compact CLI foundation that is easy to run, understand, extend, and reuse for scripting experiments.",
+      "tags": ["Python", "CLI", "JSON", "Automation"],
+      "href": "https://github.com/Naveen060/python",
+      "accent": "orange"
+    }
+  ],
+  "journey": [
+    {
+      "type": "Experience",
+      "period": "Present",
+      "place": "Goldman Sachs",
+      "role": "Software Engineering",
+      "description": "Building toward dependable, AI-enabled products and backend platforms in a high-expectation environment."
+    },
+    {
+      "type": "Education",
+      "period": "2024 - 2025",
+      "place": "University of Central Missouri",
+      "role": "Computer Science",
+      "description": "Graduate studies centered on software engineering, practical AI, and stronger systems thinking."
+    }
+  ],
+  "certifications": [
+    { "mark": "AWS", "title": "AWS Certified AI Practitioner", "issuer": "Amazon Web Services" },
+    { "mark": "AZ", "title": "Azure Fundamentals", "issuer": "Microsoft · AZ-900" },
+    { "mark": "PL", "title": "Power Platform Fundamentals", "issuer": "Microsoft · PL-900" }
+  ]
+}

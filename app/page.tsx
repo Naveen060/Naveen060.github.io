@@ -1,343 +1,346 @@
-const projects = [
-  {
-    number: "01",
-    title: "Attendance Intelligence Platform",
-    summary:
-      "A full attendance workflow with multi-face recognition, liveness checks, configurable confidence thresholds, admin tools, and SQLite reporting.",
-    tags: ["Flask", "OpenCV", "SQLite", "Computer Vision"],
-    href: "https://github.com/Naveen060/face-recognition-based-attendance-system",
-    tone: "lime",
-    label: "Featured build",
-  },
-  {
-    number: "02",
-    title: "Emotion-Aware Music Recommender",
-    summary:
-      "A webcam-powered Streamlit experience that reads facial emotion, ranks mood signals, and turns them into an exportable playlist.",
-    tags: ["Streamlit", "TensorFlow", "OpenCV", "pandas"],
-    href: "https://github.com/Naveen060/Emotion-based-music-recommendation-system",
-    tone: "coral",
-    label: "Applied AI",
-  },
-  {
-    number: "03",
-    title: "Team10 Sprint Board",
-    summary:
-      "A lightweight command center for sprint planning, ownership, status tracking, backlog analytics, local persistence, and CSV exports.",
-    tags: ["Python", "Streamlit", "JSON", "Testing"],
-    href: "https://github.com/Naveen060/team10",
-    tone: "blue",
-    label: "Team tooling",
-  },
-  {
-    number: "04",
-    title: "Python Utility Toolkit",
-    summary:
-      "A dependency-light CLI toolkit for everyday text, JSON, file analysis, URL slugs, and SHA-256 checksum workflows.",
-    tags: ["Python", "CLI", "JSON", "Automation"],
-    href: "https://github.com/Naveen060/python",
-    tone: "violet",
-    label: "Developer tool",
-  },
-];
+"use client";
 
-const skillGroups = [
-  {
-    title: "Languages",
-    index: "A",
-    skills: ["Python", "SQL", "JavaScript", "TypeScript"],
-  },
-  {
-    title: "Backend & Data",
-    index: "B",
-    skills: ["FastAPI", "Flask", "SQLite", "REST APIs"],
-  },
-  {
-    title: "AI & Vision",
-    index: "C",
-    skills: ["TensorFlow", "scikit-learn", "OpenCV", "pandas", "NumPy"],
-  },
-  {
-    title: "Product & Tools",
-    index: "D",
-    skills: ["React", "Electron", "Streamlit", "Git", "Vite"],
-  },
-];
+import { useEffect, useMemo, useState } from "react";
+import portfolio from "./data/portfolio.json";
 
-const certifications = [
-  { title: "AWS Certified AI Practitioner", issuer: "Amazon Web Services", mark: "AWS" },
-  { title: "Azure Fundamentals", issuer: "Microsoft · AZ-900", mark: "AZ" },
-  { title: "Power Platform Fundamentals", issuer: "Microsoft · PL-900", mark: "PL" },
-];
+const filters = ["All", "AI / CV", "Tools"] as const;
 
 export default function Home() {
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [activeSkill, setActiveSkill] = useState(portfolio.skillGroups[0].id);
+  const [filter, setFilter] = useState<(typeof filters)[number]>("All");
+  const [openProject, setOpenProject] = useState<string | null>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setRoleIndex((current) => (current + 1) % portfolio.roles.length);
+    }, 2800);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const updateProgress = () => {
+      const available = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(available > 0 ? (window.scrollY / available) * 100 : 0);
+    };
+    updateProgress();
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    return () => window.removeEventListener("scroll", updateProgress);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("is-visible");
+        });
+      },
+      { threshold: 0.12 }
+    );
+    const elements = document.querySelectorAll("[data-reveal]");
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
+
+  const selectedSkill = useMemo(
+    () => portfolio.skillGroups.find((group) => group.id === activeSkill) ?? portfolio.skillGroups[0],
+    [activeSkill]
+  );
+
+  const visibleProjects = useMemo(
+    () => portfolio.projects.filter((project) => filter === "All" || project.category === filter),
+    [filter]
+  );
+
   return (
-    <main>
-      <header className="site-header">
-        <a className="brand" href="#top" aria-label="Venkata Naveen — home">
-          VN<span>.</span>
+    <main className={`portfolio theme-${theme}`}>
+      <div className="scroll-progress" style={{ width: `${scrollProgress}%` }} aria-hidden="true" />
+
+      <header className="topbar">
+        <a className="brand" href="#top" aria-label="Venkata Naveen - home">
+          VN<span>/</span>
         </a>
-        <nav className="nav-links" aria-label="Primary navigation">
-          <a href="#work">Work</a>
-          <a href="#about">About</a>
-          <a href="#skills">Skills</a>
-          <a href="#journey">Journey</a>
+        <nav className={menuOpen ? "main-nav is-open" : "main-nav"} aria-label="Primary navigation">
+          <a href="#work" onClick={() => setMenuOpen(false)}>Work</a>
+          <a href="#skills" onClick={() => setMenuOpen(false)}>Stack</a>
+          <a href="#journey" onClick={() => setMenuOpen(false)}>Journey</a>
+          <a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
         </nav>
-        <a className="nav-cta" href="#contact">
-          Let&apos;s talk <span aria-hidden="true">↗</span>
-        </a>
+        <div className="header-actions">
+          <button
+            className="theme-toggle"
+            type="button"
+            onClick={() => setTheme((value) => (value === "light" ? "dark" : "light"))}
+            aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
+          >
+            <span aria-hidden="true">{theme === "light" ? "☾" : "☀"}</span>
+          </button>
+          <a className="header-link" href="https://github.com/Naveen060" target="_blank" rel="noreferrer">
+            GitHub <span aria-hidden="true">↗</span>
+          </a>
+          <button
+            className="menu-toggle"
+            type="button"
+            aria-label="Toggle navigation"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((value) => !value)}
+          >
+            <span /><span />
+          </button>
+        </div>
       </header>
 
-      <section className="hero poster-hero" id="top">
-        <div className="hero-grid" aria-hidden="true" />
-        <h1 className="sr-only">
-          Venkata Naveen Chava — Software Engineer, AI and Backend
-        </h1>
-        <div className="poster-shell">
-          <img
-            className="poster-image"
-            src="/og.png"
-            alt="Venkata Naveen Chava — Software Engineer, AI and Backend. Building intelligent software beyond the demo."
-          />
-        </div>
-        <div className="poster-footer">
-          <div className="poster-proof" aria-label="Portfolio focus">
-            <span><i className="status-dot" /> Applied AI</span>
-            <span>Backend systems</span>
-            <span>Computer vision</span>
-            <span>4 selected builds</span>
+      <section className="hero" id="top">
+        <div className="ambient ambient-one" aria-hidden="true" />
+        <div className="ambient ambient-two" aria-hidden="true" />
+        <div className="hero-content" data-reveal>
+          <div className="availability"><i /> Available for thoughtful conversations</div>
+          <p className="eyebrow">Software engineer · United States</p>
+          <h1>
+            I turn intelligent ideas into products
+            <span> people can actually use.</span>
+          </h1>
+          <div className="role-switcher" aria-live="polite">
+            <span>Currently exploring</span>
+            <strong>{portfolio.roles[roleIndex]}</strong>
           </div>
-          <div className="hero-actions">
-            <a className="button button-primary" href="#work">
-              Explore my work <span aria-hidden="true">↓</span>
-            </a>
-            <a
-              className="button button-secondary"
-              href="https://www.linkedin.com/in/venkata-naveen-84a190388"
-              target="_blank"
-              rel="noreferrer"
-            >
-              LinkedIn <span aria-hidden="true">↗</span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <div className="marquee" aria-label="Areas of focus">
-        <div>
-          <span>Applied AI</span><b>✦</b><span>Backend Systems</span><b>✦</b>
-          <span>Computer Vision</span><b>✦</b><span>Product Engineering</span><b>✦</b>
-          <span>Applied AI</span><b>✦</b><span>Backend Systems</span><b>✦</b>
-          <span>Computer Vision</span><b>✦</b><span>Product Engineering</span>
-        </div>
-      </div>
-
-      <section className="section work-section" id="work">
-        <div className="section-heading split-heading">
-          <div>
-            <span className="section-kicker">01 / Selected work</span>
-            <h2>Projects with a pulse.</h2>
-          </div>
-          <p>
-            Working systems built around real workflows—from recognizing a face to helping a
-            team move a sprint forward.
+          <p className="hero-summary">
+            I build AI-enabled products, backend platforms, computer-vision workflows, and
+            developer tools with a focus on real product behavior—not just technical demos.
           </p>
-        </div>
-
-        <div className="project-grid">
-          {projects.map((project) => (
-            <a
-              className={`project-card ${project.tone}`}
-              href={project.href}
-              target="_blank"
-              rel="noreferrer"
-              key={project.title}
-              aria-label={`${project.title} — view on GitHub`}
-            >
-              <div className="project-card-top">
-                <span className="project-number">{project.number}</span>
-                <span className="project-label">{project.label}</span>
-                <span className="project-arrow" aria-hidden="true">↗</span>
-              </div>
-              <div className="project-display" aria-hidden="true">
-                <span className="display-corner">{project.number}</span>
-                <div className="display-lines">
-                  <i />
-                  <i />
-                  <i />
-                </div>
-                <strong>{project.title.split(" ").slice(0, 2).join(" ")}</strong>
-              </div>
-              <div className="project-content">
-                <h3>{project.title}</h3>
-                <p>{project.summary}</p>
-                <div className="tag-row">
-                  {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
-                </div>
-              </div>
+          <div className="hero-actions">
+            <a className="primary-button" href="#work">Explore selected work <span>↓</span></a>
+            <a className="text-button" href="https://www.linkedin.com/in/venkata-naveen-84a190388" target="_blank" rel="noreferrer">
+              Connect on LinkedIn <span>↗</span>
             </a>
-          ))}
+          </div>
+          <div className="role-dots" aria-label="Choose portfolio focus">
+            {portfolio.roles.map((role, index) => (
+              <button
+                type="button"
+                className={index === roleIndex ? "is-active" : ""}
+                onClick={() => setRoleIndex(index)}
+                aria-label={`Show ${role}`}
+                key={role}
+              />
+            ))}
+          </div>
         </div>
 
-        <a
-          className="text-link"
-          href="https://github.com/Naveen060"
-          target="_blank"
-          rel="noreferrer"
+        <div
+          className="hero-media"
+          data-reveal
+          onPointerMove={(event) => {
+            const bounds = event.currentTarget.getBoundingClientRect();
+            setTilt({
+              x: ((event.clientX - bounds.left) / bounds.width - 0.5) * 8,
+              y: ((event.clientY - bounds.top) / bounds.height - 0.5) * -8,
+            });
+          }}
+          onPointerLeave={() => setTilt({ x: 0, y: 0 })}
         >
-          See the full GitHub profile <span aria-hidden="true">↗</span>
-        </a>
-      </section>
-
-      <section className="section about-section" id="about">
-        <div className="section-heading about-title">
-          <span className="section-kicker light">02 / About</span>
-          <h2>
-            Curious by nature.<br />Practical by choice.
-          </h2>
+          <div
+            className="photo-card"
+            style={{ transform: `perspective(900px) rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)` }}
+          >
+            <img src="/naveen-profile.jpg" alt="Venkata Naveen by the Chicago River" />
+            <div className="photo-shade" />
+            <div className="photo-label">
+              <span>Venkata Naveen</span>
+              <small>Software Engineer</small>
+            </div>
+          </div>
+          <div className="live-card">
+            <span><i /> live profile</span>
+            <strong>Building useful systems</strong>
+          </div>
+          <div className="json-card">
+            <div><span /> <span /> <span /></div>
+            <code>
+              {`{\n  "focus": "${portfolio.roles[roleIndex]}",\n  "mode": "shipping"\n}`}
+            </code>
+          </div>
         </div>
-        <div className="about-layout">
-          <div className="about-lead">
-            <p>
-              I&apos;m a software engineer focused on building <strong>AI-enabled products</strong>,
-              dependable <strong>backend platforms</strong>, and tools that make complex workflows
-              feel straightforward.
-            </p>
-            <p>
-              I care about the whole product—not only the model or API, but how it is structured,
-              tested, explained, and experienced by the person using it.
-            </p>
-          </div>
-          <div className="principles">
-            <article>
-              <span>01</span>
-              <h3>Build for use</h3>
-              <p>Every project starts with a workflow and ends with something demonstrable.</p>
-            </article>
-            <article>
-              <span>02</span>
-              <h3>Keep it legible</h3>
-              <p>Clear architecture and documentation make good ideas easier to grow.</p>
-            </article>
-            <article>
-              <span>03</span>
-              <h3>Learn in public</h3>
-              <p>Each repository is a visible record of sharper thinking and better craft.</p>
-            </article>
-          </div>
+
+        <div className="hero-stats" data-reveal>
+          {portfolio.stats.map((stat) => (
+            <div key={stat.label}><strong>{stat.value}</strong><span>{stat.label}</span></div>
+          ))}
+          <p>Scroll to explore <span aria-hidden="true">↓</span></p>
         </div>
       </section>
 
       <section className="section skills-section" id="skills">
-        <div className="section-heading split-heading">
-          <div>
-            <span className="section-kicker">03 / Toolkit</span>
-            <h2>Tools I reach for.</h2>
-          </div>
-          <p>
-            A focused stack for shipping data-aware products, backend services, and applied
-            machine-learning experiences.
-          </p>
+        <div className="section-intro" data-reveal>
+          <p className="section-label">01 · Interactive stack</p>
+          <h2>Choose a layer.<br />See how I build.</h2>
+          <p>Select a category to explore the tools behind my projects and the kind of problems I use them to solve.</p>
         </div>
-        <div className="skills-grid">
-          {skillGroups.map((group) => (
-            <article className="skill-group" key={group.title}>
-              <div className="skill-title">
-                <span>{group.index}</span>
-                <h3>{group.title}</h3>
-              </div>
-              <div className="skill-list">
-                {group.skills.map((skill) => <span key={skill}>{skill}</span>)}
-              </div>
-            </article>
+
+        <div className="skill-explorer" data-reveal>
+          <div className="skill-tabs" role="tablist" aria-label="Technology categories">
+            {portfolio.skillGroups.map((group) => (
+              <button
+                type="button"
+                role="tab"
+                aria-selected={activeSkill === group.id}
+                className={activeSkill === group.id ? "is-active" : ""}
+                onClick={() => setActiveSkill(group.id)}
+                key={group.id}
+              >
+                <span>{String(portfolio.skillGroups.indexOf(group) + 1).padStart(2, "0")}</span>
+                {group.label}
+              </button>
+            ))}
+          </div>
+          <div className="skill-output" role="tabpanel" key={selectedSkill.id}>
+            <div className="output-head">
+              <div><i /><i /><i /></div>
+              <span>stack/{selectedSkill.id}.json</span>
+            </div>
+            <p>{selectedSkill.summary}</p>
+            <div className="skill-meters">
+              {selectedSkill.items.map((item) => (
+                <div className="skill-meter" key={item.name}>
+                  <div><strong>{item.name}</strong><span>{item.level}%</span></div>
+                  <i><b style={{ width: `${item.level}%` }} /></i>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section work-section" id="work">
+        <div className="section-intro horizontal" data-reveal>
+          <div>
+            <p className="section-label">02 · Selected work</p>
+            <h2>Built to be used.</h2>
+          </div>
+          <p>Filter the work, then open any project to see the problem, approach, and result—not just a repository title.</p>
+        </div>
+
+        <div className="project-toolbar" data-reveal>
+          <div role="group" aria-label="Filter projects">
+            {filters.map((item) => (
+              <button
+                type="button"
+                className={filter === item ? "is-active" : ""}
+                onClick={() => {
+                  setFilter(item);
+                  setOpenProject(null);
+                }}
+                key={item}
+              >
+                {item}
+                <span>{item === "All" ? portfolio.projects.length : portfolio.projects.filter((project) => project.category === item).length}</span>
+              </button>
+            ))}
+          </div>
+          <span>{visibleProjects.length} projects shown</span>
+        </div>
+
+        <div className="project-list">
+          {visibleProjects.map((project) => {
+            const expanded = openProject === project.id;
+            return (
+              <article className={`project-row accent-${project.accent} ${expanded ? "is-open" : ""}`} key={project.id} data-reveal>
+                <button
+                  className="project-summary"
+                  type="button"
+                  onClick={() => setOpenProject(expanded ? null : project.id)}
+                  aria-expanded={expanded}
+                >
+                  <span className="project-index">{project.index}</span>
+                  <div>
+                    <span className="project-category">{project.category}</span>
+                    <h3>{project.title}</h3>
+                    <p>{project.summary}</p>
+                    <div className="tag-list">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
+                  </div>
+                  <span className="expand-mark" aria-hidden="true">{expanded ? "−" : "+"}</span>
+                </button>
+                {expanded && (
+                  <div className="project-details">
+                    <div><span>Challenge</span><p>{project.challenge}</p></div>
+                    <div><span>Approach</span><p>{project.solution}</p></div>
+                    <div><span>Result</span><p>{project.outcome}</p></div>
+                    <a href={project.href} target="_blank" rel="noreferrer">View source on GitHub <span>↗</span></a>
+                  </div>
+                )}
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="section about-section">
+        <div className="about-grid">
+          <div data-reveal>
+            <p className="section-label">03 · How I think</p>
+            <h2>Technical depth.<br />Product awareness.</h2>
+          </div>
+          <div className="about-copy" data-reveal>
+            <p>I care about the complete experience around a system: how it is structured, tested, explained, and ultimately used by another person.</p>
+            <p>That means treating a model, API, or script as the beginning of a product—not the finish line.</p>
+          </div>
+        </div>
+        <div className="principle-grid">
+          {[
+            ["01", "Start with behavior", "Define what a useful outcome feels like before choosing the technology."],
+            ["02", "Make it legible", "Clear architecture and documentation let a good idea survive beyond its author."],
+            ["03", "Close the loop", "Measure, test, and refine the full workflow instead of polishing one isolated component."],
+          ].map(([number, title, text]) => (
+            <article key={number} data-reveal><span>{number}</span><h3>{title}</h3><p>{text}</p></article>
           ))}
         </div>
       </section>
 
       <section className="section journey-section" id="journey">
-        <div className="journey-header">
-          <span className="section-kicker light">04 / Journey</span>
-          <h2>Where I&apos;m learning &amp; building.</h2>
+        <div className="section-intro horizontal" data-reveal>
+          <div><p className="section-label">04 · Journey</p><h2>Learning while building.</h2></div>
+          <p>A short view of the environments shaping my work today, supported by current cloud and AI credentials.</p>
         </div>
-        <div className="timeline">
-          <article className="timeline-item">
-            <div className="timeline-marker"><span /></div>
-            <div className="timeline-meta">
-              <span>Experience</span>
-              <strong>Present</strong>
-            </div>
-            <div className="timeline-copy">
-              <h3>Goldman Sachs</h3>
-              <p className="timeline-role">Software Engineering</p>
-              <p>Building toward dependable, AI-enabled products and backend platforms in a high-expectation environment.</p>
-            </div>
-          </article>
-          <article className="timeline-item">
-            <div className="timeline-marker"><span /></div>
-            <div className="timeline-meta">
-              <span>Education</span>
-              <strong>2024 — 2025</strong>
-            </div>
-            <div className="timeline-copy">
-              <h3>University of Central Missouri</h3>
-              <p className="timeline-role">Computer Science</p>
-              <p>A graduate chapter centered on software engineering, practical AI, and stronger systems thinking.</p>
-            </div>
-          </article>
-        </div>
-
-        <div className="certifications">
-          <div className="cert-heading">
-            <span>Validated learning</span>
-            <h3>Certifications</h3>
-          </div>
-          <div className="cert-grid">
-            {certifications.map((cert) => (
-              <article key={cert.title}>
-                <span className="cert-mark">{cert.mark}</span>
-                <div>
-                  <h4>{cert.title}</h4>
-                  <p>{cert.issuer}</p>
-                </div>
+        <div className="journey-layout">
+          <div className="timeline">
+            {portfolio.journey.map((item) => (
+              <article key={item.place} data-reveal>
+                <div className="timeline-dot" />
+                <div className="timeline-meta"><span>{item.type}</span><strong>{item.period}</strong></div>
+                <div><h3>{item.place}</h3><strong>{item.role}</strong><p>{item.description}</p></div>
               </article>
+            ))}
+          </div>
+          <div className="credential-stack" data-reveal>
+            <span className="credential-label">Validated learning</span>
+            {portfolio.certifications.map((cert) => (
+              <article key={cert.title}><span>{cert.mark}</span><div><h3>{cert.title}</h3><p>{cert.issuer}</p></div></article>
             ))}
           </div>
         </div>
       </section>
 
       <section className="contact-section" id="contact">
-        <div className="contact-orb" aria-hidden="true" />
-        <span className="section-kicker light">05 / Contact</span>
-        <p className="contact-overline">Have a problem worth building?</p>
-        <h2>Let&apos;s make it useful.</h2>
-        <p className="contact-copy">
-          I&apos;m always interested in thoughtful software, applied AI, backend engineering,
-          and conversations that lead to better products.
-        </p>
-        <div className="contact-actions">
-          <a
-            className="button contact-primary"
-            href="https://www.linkedin.com/in/venkata-naveen-84a190388"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Connect on LinkedIn <span aria-hidden="true">↗</span>
-          </a>
-          <a
-            className="button contact-secondary"
-            href="https://github.com/Naveen060"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Explore GitHub <span aria-hidden="true">↗</span>
-          </a>
+        <div className="contact-content" data-reveal>
+          <p className="section-label">05 · Start a conversation</p>
+          <h2>Have a useful problem<br />worth building?</h2>
+          <p>I’m interested in applied AI, backend engineering, computer vision, and conversations that lead to better software.</p>
+          <div>
+            <a className="primary-button" href="https://www.linkedin.com/in/venkata-naveen-84a190388" target="_blank" rel="noreferrer">Connect on LinkedIn <span>↗</span></a>
+            <a className="text-button" href="https://github.com/Naveen060" target="_blank" rel="noreferrer">Explore GitHub <span>↗</span></a>
+          </div>
         </div>
+        <div className="contact-visual" aria-hidden="true"><span>VN</span><i /><i /><i /></div>
       </section>
 
       <footer>
-        <a className="brand footer-brand" href="#top">VN<span>.</span></a>
+        <a className="brand" href="#top">VN<span>/</span></a>
         <p>© 2026 Venkata Naveen Chava</p>
-        <p>Designed around curiosity, built with intent.</p>
+        <p>Designed for interaction, built with intent.</p>
       </footer>
     </main>
   );
