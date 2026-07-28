@@ -356,16 +356,17 @@ export default function Home() {
           <span>{visibleProjects.length} projects shown</span>
         </div>
 
-        <div className="project-list">
+        <div className="project-list" data-reveal>
           {visibleProjects.map((project) => {
             const expanded = openProject === project.id;
             return (
-              <article className={`project-row accent-${project.accent} ${expanded ? "is-open" : ""}`} key={project.id} data-reveal>
+              <article className={`project-row accent-${project.accent} ${expanded ? "is-open" : ""}`} key={project.id}>
                 <button
                   className="project-summary"
                   type="button"
                   onClick={() => setOpenProject(expanded ? null : project.id)}
                   aria-expanded={expanded}
+                  aria-controls={`project-details-${project.id}`}
                 >
                   <span className="project-index">{project.index}</span>
                   <div>
@@ -377,7 +378,7 @@ export default function Home() {
                   <span className="expand-mark" aria-hidden="true">{expanded ? "−" : "+"}</span>
                 </button>
                 {expanded && (
-                  <div className="project-details">
+                  <div className="project-details" id={`project-details-${project.id}`}>
                     <div><span>Challenge</span><p>{project.challenge}</p></div>
                     <div><span>Approach</span><p>{project.solution}</p></div>
                     <div><span>Result</span><p>{project.outcome}</p></div>
