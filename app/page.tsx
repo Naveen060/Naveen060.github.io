@@ -9,6 +9,7 @@ export default function Home() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [menuOpen, setMenuOpen] = useState(false);
   const [roleIndex, setRoleIndex] = useState(0);
+  const [roleAutoPlay, setRoleAutoPlay] = useState(true);
   const [activeSkill, setActiveSkill] = useState(portfolio.skillGroups[0].id);
   const [activeTechnology, setActiveTechnology] = useState(portfolio.skillGroups[0].items[0].name);
   const [skillQuery, setSkillQuery] = useState("");
@@ -19,11 +20,12 @@ export default function Home() {
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    if (!roleAutoPlay || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = window.setInterval(() => {
       setRoleIndex((current) => (current + 1) % portfolio.roles.length);
     }, 2800);
     return () => window.clearInterval(timer);
-  }, []);
+  }, [roleAutoPlay]);
 
   useEffect(() => {
     const updateProgress = () => {
@@ -138,7 +140,7 @@ export default function Home() {
             I turn intelligent ideas into products
             <span> people can actually use.</span>
           </h1>
-          <div className="role-switcher" aria-live="polite">
+          <div className="role-switcher">
             <span>Currently exploring</span>
             <strong>{portfolio.roles[roleIndex]}</strong>
           </div>
@@ -152,13 +154,17 @@ export default function Home() {
               Connect on LinkedIn <span>↗</span>
             </a>
           </div>
-          <div className="role-dots" aria-label="Choose portfolio focus">
+          <div className="role-dots" role="group" aria-label="Choose portfolio focus">
             {portfolio.roles.map((role, index) => (
               <button
                 type="button"
                 className={index === roleIndex ? "is-active" : ""}
-                onClick={() => setRoleIndex(index)}
+                onClick={() => {
+                  setRoleAutoPlay(false);
+                  setRoleIndex(index);
+                }}
                 aria-label={`Show ${role}`}
+                aria-pressed={index === roleIndex}
                 key={role}
               />
             ))}

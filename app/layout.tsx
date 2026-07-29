@@ -1,16 +1,7 @@
 import type { Metadata } from "next";
-import { DM_Sans, Manrope } from "next/font/google";
+import "@fontsource-variable/manrope/wght.css";
+import "@fontsource-variable/dm-sans/wght.css";
 import "./globals.css";
-
-const heading = Manrope({
-  variable: "--font-heading",
-  subsets: ["latin"],
-});
-
-const body = DM_Sans({
-  variable: "--font-body",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://naveen060.github.io/venkata-naveen-portfolio/"),
@@ -50,7 +41,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${heading.variable} ${body.variable}`}>{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
